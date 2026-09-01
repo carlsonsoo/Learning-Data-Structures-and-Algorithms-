@@ -10,36 +10,69 @@ class HashMap:
 
     # 1. Length
     def __len__(self):
-        pass
+        return self.size
 
     # 2. Check if an item is part of the hashmap
     def __contains__(self, key):
-        pass
+        index = self._hash_function(key)
+        bucket = self.buckets[index]
 
+        for k, v in bucket:
+            if k == key:
+                return True
+        return False
+    
     # 3. Putting in a new key-value pair
     def put(self, key, value):
-        pass
+        index = self._hash_function(key)
+        bucket = self.buckets[index]
+
+        for i, (k, v) in enumerate(bucket):
+            if k == key:
+                bucket[i] = (key, value)
+                break
+
+            else:
+                bucket.append((key, value   ))
+                self.size += 1
 
     # 4. Obtain the value of a provided key
     def get(self, key):
-        pass
+        index = self._hash_function(key)
+        bucket = self.buckets[index]
+        
+        for k, v in bucket:
+            if k == key:
+                return v
+
+        else:
+            raise KeyError("Key not found")
 
     # 5. Remove a key 
     def remove(self, key):
-        pass
+        index = self._hash_function(key)
+        bucket = self.buckets[index]
+                
+        for i, (k, v) in enumerate(bucket):
+            if k == key:
+                del bucket[i]
+                self.size -= 1
+                break
+        else:
+            raise KeyError("Key not found")
 
     # 6. Dictionary methods
     # 6.1 keys
     def keys(self):
-        pass
+        return [k for bucket in self.buckets for k, _ in bucket]
 
     # 6.2 values
     def values(self):
-        pass
+        return [v for bucket in self.buckets for _, v in bucket]
 
     # 6.3 key-value pairs
     def items(self):
-        pass
+        return [(k,v) for bucket in self.buckets for k, v in bucket]
 
     # Hash Function - helper function
     def _hash_function(self, key):
@@ -49,4 +82,3 @@ class HashMap:
         for character in key_string():
             # Converting character to ASCII value
             hash_result = (hash_result * 31 + ord(character)) % self.capacity
-
