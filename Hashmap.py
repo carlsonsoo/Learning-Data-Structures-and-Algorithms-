@@ -1,5 +1,5 @@
 class HashMap:
-    def __innit__(self, capacity):
+    def __init__(self, capacity):
         # number of buckets
         self.capacity = capacity
         # number of elements in the hashmap
@@ -32,9 +32,9 @@ class HashMap:
                 bucket[i] = (key, value)
                 break
 
-            else:
-                bucket.append((key, value   ))
-                self.size += 1
+        else:
+            bucket.append((key, value))
+            self.size += 1
 
     # 4. Obtain the value of a provided key
     def get(self, key):
@@ -79,6 +79,16 @@ class HashMap:
         key_string = str(key)
         hash_result = 0
 
-        for character in key_string():
+        for character in key_string:
             # Converting character to ASCII value
             hash_result = (hash_result * 31 + ord(character)) % self.capacity
+
+        return hash_result
+    
+if __name__ == '__main__':
+    hash_map = HashMap(32)
+    hash_map.put("name", "Mike")
+    hash_map.put("age", 30)
+    hash_map.put("job", "Programmer")
+
+    print(hash_map.items())
