@@ -43,5 +43,10 @@ class HashMap:
 
     # Hash Function - helper function
     def _hash_function(self, key):
-        pass
+        key_string = str(key)
+        hash_result = 0
+
+        for character in key_string():
+            # Converting character to ASCII value
+            hash_result = (hash_result * 31 + ord(character)) % self.capacity
 
